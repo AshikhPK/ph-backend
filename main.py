@@ -1,19 +1,20 @@
 from fastapi import FastAPI
+from fastapi.responses import PlainTextResponse
 
 app = FastAPI()
 
-# global storage
-latest_ph = {"value": None}
+latest_ph = "EMPTY"
 
-@app.get("/")
+@app.get("/", response_class=PlainTextResponse)
 def root():
-    return {"status": "Backend is running"}
+    return "BACKEND ROOT OK"
 
-@app.get("/api/ph")
+@app.get("/api/ph", response_class=PlainTextResponse)
 def get_ph():
-    return latest_ph
+    return f"PH VALUE = {latest_ph}"
 
-@app.get("/api/ph/update")
+@app.get("/api/ph/update", response_class=PlainTextResponse)
 def update_ph(ph: float):
-    latest_ph["value"] = ph
-    return {"status": "updated", "value": ph}
+    global latest_ph
+    latest_ph = str(ph)
+    return f"UPDATED TO {latest_ph}"
