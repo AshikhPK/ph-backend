@@ -16,4 +16,8 @@ def receive_ph(data: PHData):
 @app.get("/api/ph")
 def get_ph():
     return latest_ph
+@app.get("/")
+def root():
+    return {"status": "Backend is running"}
+
 
